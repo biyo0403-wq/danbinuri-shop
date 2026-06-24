@@ -3,9 +3,11 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
+import { site } from "@/lib/site";
+
 export const metadata: Metadata = {
-  title: "단비누리 | DANBINURI",
-  description: "단비누리 공식 온라인 스토어 - 여성 · 남성 · 키즈 패션",
+  title: `${site.name} | 단체복 · 작업복 맞춤 제작`,
+  description: site.description,
 };
 
 export default function RootLayout({

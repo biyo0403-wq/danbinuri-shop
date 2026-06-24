@@ -1,42 +1,39 @@
-export type Gnb = {
+export type NavItem = {
   label: string;
   href: string;
-  /** 메가메뉴 컬럼 (선택) */
-  columns?: { title: string; items: { label: string; href: string }[] }[];
   highlight?: boolean;
 };
 
-export type Product = {
+/** 히어로 패널 (작업복 / 안전조끼 등) */
+export type HeroPanel = {
   id: string;
-  brand: string;
-  name: string;
-  price: number;
-  /** 정가 (할인 표기용) */
-  listPrice?: number;
-  /** 할인율 % */
-  sale?: number;
-  /** public/images/products/ 하위 파일명 */
+  eyebrow?: string;
+  title: string;
+  desc?: string;
+  href: string;
+  /** public/images/hero/ 하위 파일 경로 */
   image: string;
-  badges?: string[];
-  colors?: number;
-  isNew?: boolean;
-  isBest?: boolean;
-  coupon?: boolean;
 };
 
-export type Banner = {
+/** 강점 카드 */
+export type Strength = {
   id: string;
   title: string;
-  subtitle?: string;
-  caption?: string;
-  href: string;
-  /** public/images/ 기준 경로 */
-  image: string;
+  desc: string;
 };
 
-export type QuickCategory = {
+/** 제작 품목 카테고리 */
+export type Category = {
   label: string;
   href: string;
-  /** public/images/quick/ 하위 파일명 */
   image: string;
+  desc?: string;
 };
+
+/** 제작 과정 단계 */
+export type ProcessStep = {
+  step: number;
+  title: string;
+  desc: string;
+};
+

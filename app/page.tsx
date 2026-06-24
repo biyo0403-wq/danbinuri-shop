@@ -1,43 +1,19 @@
-import HeroCarousel from "@/components/home/HeroCarousel";
-import QuickCategories from "@/components/home/QuickCategories";
-import ProductSection from "@/components/home/ProductSection";
-import PromoBanners from "@/components/home/PromoBanners";
-import {
-  heroBanners,
-  newProducts,
-  bestProducts,
-  saleProducts,
-} from "@/lib/data";
+import Hero from "@/components/home/Hero";
+import About from "@/components/home/About";
+import Strengths from "@/components/home/Strengths";
+import Categories from "@/components/home/Categories";
+import Process from "@/components/home/Process";
+import InquiryCTA from "@/components/home/InquiryCTA";
 
 export default function Home() {
   return (
     <>
-      <HeroCarousel slides={heroBanners} />
-      <QuickCategories />
-
-      <ProductSection
-        title="NEW ARRIVAL"
-        subtitle="이번 주 새로 입고된 신상품"
-        href="/new"
-        products={newProducts}
-      />
-
-      <PromoBanners />
-
-      <ProductSection
-        title="WEEKLY BEST"
-        subtitle="가장 많이 찾은 베스트 아이템"
-        href="/best"
-        products={bestProducts}
-        ranked
-      />
-
-      <ProductSection
-        title="SALE"
-        subtitle="놓치면 아쉬운 특가"
-        href="/sale"
-        products={saleProducts}
-      />
+      <Hero />
+      <About />
+      <Strengths />
+      <Categories />
+      <Process />
+      <InquiryCTA />
     </>
   );
 }

@@ -1,33 +1,25 @@
 # 이미지 넣는 곳
 
-아래 경로에 같은 파일명으로 **.jpg** 파일만 넣으면 화면에 자동으로 반영됩니다.
+아래 경로에 같은 파일명으로 **.jpg** 파일만 넣으면 화면에 자동 반영됩니다.
 파일이 없으면 회색 플레이스홀더(파일명 표시)가 대신 보입니다.
 
-## hero/ — 메인 상단 슬라이드 (권장 1920×840)
-- hero-1.jpg
-- hero-2.jpg
-- hero-3.jpg
+## hero/ — 메인 상단 자동 슬라이드 3장 (권장 가로 와이드 1920×840)
+- hero-uniform.jpg  (작업복)
+- hero-group.jpg    (단체복 — 야유회 만세 컷)
+- hero-vest.jpg     (안전조끼 · 모자)
 
-## quick/ — 원형 퀵 카테고리 (권장 정사각 400×400)
-- new.jpg
-- best.jpg
-- outer.jpg
-- knit.jpg
-- dress.jpg
-- pants.jpg
-- shoes.jpg
-- bag.jpg
-- acc.jpg
-- sale.jpg
+## category/ — 제작 품목 6종 (권장 가로형 800×600)
+- uniform.jpg  (작업복)
+- vest.jpg     (안전조끼)
+- jumper.jpg   (점퍼)
+- apron.jpg    (앞치마)
+- cap.jpg      (모자)
+- etc.jpg      (업종별 단체복)
 
-## promo/ — 기획 배너
-- promo-1.jpg  (권장 1200×675)
-- promo-2.jpg  (권장 1200×675)
-- wide-1.jpg   (권장 1920×550)
+## marking/ — 로고 마킹 방식 3종 (권장 가로형 800×600)
+- embroidery.jpg  (자수)
+- transfer.jpg    (열전사)
+- silk.jpg        (실크인쇄)
 
-## products/ — 상품 썸네일 (권장 세로형 600×800)
-- new-1.jpg ~ new-8.jpg
-- best-1.jpg ~ best-8.jpg
-- sale-1.jpg ~ sale-8.jpg
-
-> 상품/카테고리를 추가하려면 `lib/data.ts`에서 image 경로를 함께 지정하세요.
+> 품목·문구·연락처 등 내용은 `lib/data.ts` 와 `lib/site.ts` 에서 수정합니다.
+> 전화번호 / 구글폼 / 카카오톡 / 이메일 주소는 모두 `lib/site.ts` 한 곳에서 관리합니다.

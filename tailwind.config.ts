@@ -11,7 +11,8 @@ const config: Config = {
         ink: "#111111",
         muted: "#767676",
         line: "#e5e5e5",
-        accent: "#1a1a1a",
+        brand: "#13294b",
+        point: "#2563eb",
         sale: "#e8340c",
       },
       fontFamily: {

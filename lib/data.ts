@@ -1,121 +1,58 @@
-import type { Banner, Product, QuickCategory } from "./types";
+import type {
+  Category,
+  HeroPanel,
+  ProcessStep,
+  Strength,
+} from "./types";
 
-export const heroBanners: Banner[] = [
+/** 히어로 — 작업복 / 단체복 / 안전조끼·모자 3개 슬라이드 */
+export const heroPanels: HeroPanel[] = [
   {
-    id: "hero-1",
-    title: "2026 SPRING PRE-ORDER",
-    subtitle: "단비누리 시즌 프리뷰",
-    caption: "지금 예약하면 최대 20% 적립",
-    href: "/event/spring",
-    image: "/images/hero/hero-1.jpg",
+    id: "hero-uniform",
+    eyebrow: "단비누리의 IDENTITY",
+    title: "기관 · 기업 · 학교를 위한\n맞춤 단체복 전문 기업",
+    desc: "브랜드 의류 구매부터 제조까지, 단체에 특화된 토탈 서비스를 제공합니다.",
+    href: "#inquiry",
+    image: "/images/hero/hero-uniform.jpg",
   },
   {
-    id: "hero-2",
-    title: "WEEKLY BEST",
-    subtitle: "이번 주 가장 사랑받은 아이템",
-    caption: "베스트 상품 모아보기",
-    href: "/best",
-    image: "/images/hero/hero-2.jpg",
+    id: "hero-group",
+    eyebrow: "단비누리의 IDENTITY",
+    title: "기관 · 기업 · 학교를 위한\n맞춤 단체복 전문 기업",
+    desc: "브랜드 의류 구매부터 제조까지, 단체에 특화된 토탈 서비스를 제공합니다.",
+    href: "#inquiry",
+    image: "/images/hero/hero-group.jpg",
   },
   {
-    id: "hero-3",
-    title: "OUTER COLLECTION",
-    subtitle: "환절기 아우터 기획전",
-    caption: "코트 · 자켓 · 점퍼 한눈에",
-    href: "/event/outer",
-    image: "/images/hero/hero-3.jpg",
-  },
-];
-
-export const quickCategories: QuickCategory[] = [
-  { label: "신상품", href: "/new", image: "/images/quick/new.jpg" },
-  { label: "베스트", href: "/best", image: "/images/quick/best.jpg" },
-  { label: "아우터", href: "/women/outer", image: "/images/quick/outer.jpg" },
-  { label: "니트", href: "/women/knit", image: "/images/quick/knit.jpg" },
-  { label: "원피스", href: "/women/dress", image: "/images/quick/dress.jpg" },
-  { label: "팬츠", href: "/women/pants", image: "/images/quick/pants.jpg" },
-  { label: "슈즈", href: "/shoes-bag/sneakers", image: "/images/quick/shoes.jpg" },
-  { label: "가방", href: "/shoes-bag/tote", image: "/images/quick/bag.jpg" },
-  { label: "액세서리", href: "/women/acc", image: "/images/quick/acc.jpg" },
-  { label: "세일", href: "/sale", image: "/images/quick/sale.jpg" },
-];
-
-export const promoBanners: Banner[] = [
-  {
-    id: "promo-1",
-    title: "신규 회원 15% 쿠폰",
-    caption: "가입 즉시 전 상품 사용 가능",
-    href: "/membership",
-    image: "/images/promo/promo-1.jpg",
-  },
-  {
-    id: "promo-2",
-    title: "단독 브랜드관 OPEN",
-    caption: "단비누리에서만 만나는 라인업",
-    href: "/brand",
-    image: "/images/promo/promo-2.jpg",
+    id: "hero-vest",
+    eyebrow: "단비누리의 IDENTITY",
+    title: "기관 · 기업 · 학교를 위한\n맞춤 단체복 전문 기업",
+    desc: "브랜드 의류 구매부터 제조까지, 단체에 특화된 토탈 서비스를 제공합니다.",
+    href: "#inquiry",
+    image: "/images/hero/hero-vest.jpg",
   },
 ];
 
-export const wideBanner: Banner = {
-  id: "wide-1",
-  title: "MEMBERSHIP DAY",
-  subtitle: "매월 둘째 주, 멤버십 데이",
-  caption: "전 상품 최대 10% 추가 적립 + 무료배송",
-  href: "/membership",
-  image: "/images/promo/wide-1.jpg",
-};
+/** 강점 4가지 */
+export const strengths: Strength[] = [
+  { id: "s1", title: "소량 제작 가능", desc: "한 벌부터 대량까지, 수량에 맞춰 제작합니다." },
+  { id: "s3", title: "빠른 납기", desc: "급한 일정도 상담을 통해 최대한 맞춰 드립니다." },
+  { id: "s4", title: "합리적인 단가", desc: "직접 제작으로 거품 없는 가격을 제공합니다." },
+];
 
-function makeProducts(
-  prefix: string,
-  flags: Partial<Product>
-): Product[] {
-  const brands = [
-    "DANBINURI",
-    "EDIT",
-    "GRAY LABEL",
-    "URBAN STD",
-    "ACTIVE",
-    "RANUNCULUS",
-    "OUTDOOR",
-    "GOLF LINE",
-  ];
-  const names = [
-    "오버핏 울 블렌드 코트",
-    "케이블 라운드넥 니트",
-    "코튼 스트레이트 팬츠",
-    "와이드 핏 데님",
-    "릴렉스 셔츠 자켓",
-    "베이직 무지 티셔츠",
-    "플리츠 미디 스커트",
-    "캐시미어 머플러",
-  ];
-  return Array.from({ length: 8 }, (_, i) => {
-    const base = 39000 + i * 17000;
-    const sale = flags.sale ?? (i % 3 === 0 ? 30 : i % 3 === 1 ? 20 : 0);
-    const listPrice = sale ? Math.round((base / (1 - sale / 100)) / 1000) * 1000 : undefined;
-    return {
-      id: `${prefix}-${i + 1}`,
-      brand: brands[i % brands.length],
-      name: names[i % names.length],
-      price: base,
-      listPrice,
-      sale: sale || undefined,
-      image: `/images/products/${prefix}-${i + 1}.jpg`,
-      colors: (i % 4) + 1,
-      coupon: i % 2 === 0,
-      ...flags,
-    };
-  });
-}
+/** 제작 품목 6종 */
+export const categories: Category[] = [
+  { label: "작업복", href: "#inquiry", image: "/images/category/uniform.jpg", desc: "춘추복 · 동복 · 하복" },
+  { label: "안전조끼", href: "#inquiry", image: "/images/category/vest.jpg", desc: "건설 · 물류 · 행사" },
+  { label: "점퍼", href: "#inquiry", image: "/images/category/jumper.jpg", desc: "방한 · 단체 점퍼" },
+  { label: "모자", href: "#inquiry", image: "/images/category/cap.jpg", desc: "단체 캡 · 버킷" },
+  { label: "업종별 단체복", href: "#inquiry", image: "/images/category/etc.jpg", desc: "맞춤 상담" },
+];
 
-// 상품을 모두 비워 둔 상태입니다.
-// 다시 채우려면 아래처럼 makeProducts(...)를 호출하거나 직접 배열을 작성하세요.
-//   export const newProducts: Product[] = makeProducts("new", { isNew: true, sale: 0 });
-export const newProducts: Product[] = [];
-export const bestProducts: Product[] = [];
-export const saleProducts: Product[] = [];
-
-export function formatPrice(n: number) {
-  return n.toLocaleString("ko-KR") + "원";
-}
+/** 제작 과정 4단계 */
+export const processSteps: ProcessStep[] = [
+  { step: 1, title: "상담 · 견적", desc: "품목 · 수량 · 로고 여부를 알려주시면 견적을 드립니다." },
+  { step: 2, title: "시안 디자인", desc: "로고 위치 · 색상을 반영한 시안을 제작합니다." },
+  { step: 3, title: "샘플 확인", desc: "필요 시 샘플로 색감과 사이즈를 확인합니다." },
+  { step: 4, title: "대량 제작 · 납품", desc: "확정 후 제작하여 일정에 맞춰 납품합니다." },
+];
