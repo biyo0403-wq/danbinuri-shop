@@ -14,10 +14,14 @@ $quality = 82
 $maxImgs = 8
 
 # 홈 6품목 라벨 -> 제품 카테고리(slug) -> KSK 원본 폴더
+# src 가 비어 있으면 제품 없이 빈 카테고리만 생성한다(추후 제품 채울 예정).
 $map = @(
-  @{ label = "작업복";        slug = "workwear"; src = "점퍼"   },
-  @{ label = "단체 조끼/모자"; slug = "vest";     src = "조끼"   },
-  @{ label = "단체티셔츠";     slug = "tshirt";   src = "티셔츠" }
+  @{ label = "작업복";         slug = "workwear";   src = "점퍼"   },
+  @{ label = "단체 조끼/모자";  slug = "vest";       src = "조끼"   },
+  @{ label = "단체티셔츠";      slug = "tshirt";     src = "티셔츠" },
+  @{ label = "근무복/후리스";   slug = "fleece";     src = ""       },
+  @{ label = "체육복/운동복";   slug = "sportswear"; src = ""       },
+  @{ label = "안전화";          slug = "safety";     src = ""       }
 )
 
 function Get-Slug([string]$name, [int]$idx) {
@@ -50,6 +54,19 @@ $tsCats = @()
 $tsProds = @()
 
 foreach ($m in $map) {
+  # 원본 폴더(src)가 없으면 빈 카테고리만 등록
+  if ([string]::IsNullOrWhiteSpace($m.src)) {
+    $tsCats += @"
+  {
+    slug: "$($m.slug)",
+    label: "$($m.label)",
+    productSlugs: [],
+  }
+"@
+    Write-Output ("  [$($m.slug)] (빈 카테고리)")
+    continue
+  }
+
   $catPath = Join-Path $srcCat $m.src
   $catOut  = Join-Path $outDir $m.slug
   if (Test-Path $catOut) { Remove-Item $catOut -Recurse -Force }

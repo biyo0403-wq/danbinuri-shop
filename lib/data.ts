@@ -44,10 +44,10 @@ export const strengths: Strength[] = [
 export const categories: Category[] = [
   { label: "작업복", href: "/products/workwear", image: "/images/category/uniform.jpg", desc: "춘추복 · 동복 · 하복" },
   { label: "단체 조끼/모자", href: "/products/vest", image: "/images/category/vest-cap.jpg", desc: "안전조끼 · 단체 캡" },
-  { label: "근무복/후리스", href: "#inquiry", image: "/images/category/fleece.jpg", desc: "사무 근무복 · 방한 후리스" },
-  { label: "체육복/운동복", href: "#inquiry", image: "/images/category/sportswear.jpg", desc: "단체 체육복 · 트레이닝" },
+  { label: "근무복/후리스", href: "/products/fleece", image: "/images/category/fleece.jpg", desc: "사무 근무복 · 방한 후리스" },
+  { label: "체육복/운동복", href: "/products/sportswear", image: "/images/category/sportswear.jpg", desc: "단체 체육복 · 트레이닝" },
   { label: "단체티셔츠", href: "/products/tshirt", image: "/images/category/tshirt.jpg", desc: "행사 · 단체 라운드/카라티" },
-  { label: "안전화", href: "#inquiry", image: "/images/category/safety-shoes.jpg", desc: "현장 안전화" },
+  { label: "안전화", href: "/products/safety", image: "/images/category/safety-shoes.jpg", desc: "현장 안전화" },
 ];
 
 /** 제작 과정 5단계 */

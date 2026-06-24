@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FileText, MessageCircle } from "lucide-react";
 import Img from "@/components/ui/Img";
+import { site } from "@/lib/site";
 import {
   productCategories,
   getCategory,
@@ -38,8 +40,37 @@ export default function CategoryPage({
         문의해 주세요.
       </p>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-        {list.map((p) => (
+      {list.length === 0 ? (
+        <div className="mt-10 rounded-2xl border border-line bg-neutral-50 px-6 py-16 text-center">
+          <p className="text-lg font-bold">제품을 준비 중입니다</p>
+          <p className="mt-2 text-sm text-muted">
+            해당 품목은 맞춤 제작으로 진행됩니다. 원하시는 디자인 · 수량을
+            알려주시면 견적을 안내해 드립니다.
+          </p>
+          <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+            <a
+              href={site.googleFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 rounded-lg bg-point px-5 py-3 text-sm font-bold text-white hover:bg-blue-700"
+            >
+              <FileText className="h-4 w-4" />
+              견적 신청하기
+            </a>
+            <a
+              href={site.kakaoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 rounded-lg bg-[#FEE500] px-5 py-3 text-sm font-bold text-[#3A1D1D] hover:brightness-95"
+            >
+              <MessageCircle className="h-4 w-4" />
+              카카오톡 상담
+            </a>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+          {list.map((p) => (
           <Link
             key={p.slug}
             href={`/products/${cat.slug}/${p.slug}`}
@@ -53,9 +84,10 @@ export default function CategoryPage({
               />
             </div>
             <h3 className="mt-2 text-sm font-bold lg:text-base">{p.title}</h3>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

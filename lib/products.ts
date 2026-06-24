@@ -27,6 +27,21 @@ export const productCategories: ProductCategory[] = [
     slug: "tshirt",
     label: "단체티셔츠",
     productSlugs: ["500", "500-1", "510", "571", "574", "579-580-581", "587", "590", "591", "593", "594", "ksk2626", "ksk2628", "ksk2629"],
+  },
+  {
+    slug: "fleece",
+    label: "근무복/후리스",
+    productSlugs: [],
+  },
+  {
+    slug: "sportswear",
+    label: "체육복/운동복",
+    productSlugs: [],
+  },
+  {
+    slug: "safety",
+    label: "안전화",
+    productSlugs: [],
   }
 ];
 
