@@ -54,7 +54,7 @@ export default function Footer() {
               <span className="text-white/30">|</span>
               <Link href="/privacy" className="font-semibold hover:underline">개인정보처리방침</Link>
               <span className="text-white/30">|</span>
-              <a href="#inquiry" className="hover:underline">견적문의</a>
+              <Link href="/#inquiry" className="hover:underline">견적문의</Link>
             </div>
           </div>
         </div>
