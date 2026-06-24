@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { brandGroups } from "@/lib/brands";
+import { previewLogos } from "@/lib/brands";
 import Img from "@/components/ui/Img";
 
 export default function Brands() {
+  const logos = previewLogos(10);
+
   return (
     <section id="brands" className="py-14 lg:py-20">
       <div className="mx-auto max-w-shell px-4 lg:px-5">
@@ -16,33 +18,26 @@ export default function Brands() {
               스포츠 · 아웃도어 브랜드 정품을 구매대행으로 공급합니다.
             </p>
           </div>
-          <a
-            href="#inquiry"
+          <Link
+            href="/brands"
             className="text-sm text-muted hover:text-ink hover:underline"
           >
-            브랜드 문의 +
-          </a>
+            전체보기 +
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
-          {brandGroups.map((b) => (
-            <Link
-              key={b.slug}
-              href={`/brands/${b.slug}`}
-              className="group block"
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {logos.map((src, i) => (
+            <div
+              key={src}
+              className="flex aspect-[16/7] items-center justify-center rounded-lg border border-line bg-white p-4"
             >
-              <div className="aspect-[16/9] overflow-hidden rounded-lg bg-neutral-100">
-                <Img
-                  src={b.cover}
-                  alt={b.label}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="mt-3">
-                <h3 className="text-base font-bold lg:text-lg">{b.label}</h3>
-                <p className="mt-0.5 text-sm text-muted">{b.desc}</p>
-              </div>
-            </Link>
+              <Img
+                src={src}
+                alt={`취급 브랜드 ${i + 1}`}
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>

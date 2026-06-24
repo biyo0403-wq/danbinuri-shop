@@ -40,3 +40,17 @@ export const brandGroups: BrandGroup[] = [
 export function getBrandGroup(slug: string) {
   return brandGroups.find((b) => b.slug === slug);
 }
+
+/** 홈 미리보기용 로고 목록 (스포츠·아웃도어 섞어서 최대 count개) */
+export function previewLogos(count = 10): string[] {
+  const out: string[] = [];
+  const lists = brandGroups.map((b) => [...b.images]);
+  let i = 0;
+  while (out.length < count && lists.some((l) => l.length > 0)) {
+    const list = lists[i % lists.length];
+    const next = list.shift();
+    if (next) out.push(next);
+    i++;
+  }
+  return out.slice(0, count);
+}
