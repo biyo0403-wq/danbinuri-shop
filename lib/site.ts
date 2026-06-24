@@ -11,7 +11,8 @@ export const site = {
     "축구·농구·야구·마라톤 등 단체복과 유니폼을 소량부터 대량까지 맞춤 제작합니다.",
 
   // 문의 채널 (실제 주소로 교체하세요)
-  googleFormUrl: "https://forms.gle/REPLACE_ME", // 구글폼 견적/주문 신청서
+  googleFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLScDKhReqJkTLEkl0FrgVm1ZAb0gSOPrOprkrTiYG1FQ01kr2Q/viewform", // 구글폼 견적/주문 신청서
   kakaoUrl: "http://pf.kakao.com/_REPLACE_ME", // 카카오톡 채널
   // TODO: danbinuri.kr 도메인 메일 개통 후 회사 메일로 교체
   email: "danbinuri25@naver.com",
