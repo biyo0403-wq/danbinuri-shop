@@ -13,7 +13,7 @@ export default function Process() {
         </p>
       </div>
 
-      <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
         {processSteps.map((s) => (
           <li
             key={s.step}

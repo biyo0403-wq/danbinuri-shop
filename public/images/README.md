@@ -9,12 +9,12 @@
 - hero-vest.jpg     (안전조끼 · 모자)
 
 ## category/ — 제작 품목 6종 (권장 가로형 800×600)
-- uniform.jpg  (작업복)
-- vest.jpg     (안전조끼)
-- jumper.jpg   (점퍼)
-- apron.jpg    (앞치마)
-- cap.jpg      (모자)
-- etc.jpg      (업종별 단체복)
+- uniform.jpg        (작업복)
+- vest-cap.jpg       (단체 조끼/모자)
+- fleece.jpg         (근무복/후리스)
+- sportswear.jpg     (체육복/운동복)
+- tshirt.jpg         (단체티셔츠)
+- safety-shoes.jpg   (안전화)
 
 ## marking/ — 로고 마킹 방식 3종 (권장 가로형 800×600)
 - embroidery.jpg  (자수)

@@ -43,16 +43,18 @@ export const strengths: Strength[] = [
 /** 제작 품목 6종 */
 export const categories: Category[] = [
   { label: "작업복", href: "#inquiry", image: "/images/category/uniform.jpg", desc: "춘추복 · 동복 · 하복" },
-  { label: "안전조끼", href: "#inquiry", image: "/images/category/vest.jpg", desc: "건설 · 물류 · 행사" },
-  { label: "점퍼", href: "#inquiry", image: "/images/category/jumper.jpg", desc: "방한 · 단체 점퍼" },
-  { label: "모자", href: "#inquiry", image: "/images/category/cap.jpg", desc: "단체 캡 · 버킷" },
-  { label: "업종별 단체복", href: "#inquiry", image: "/images/category/etc.jpg", desc: "맞춤 상담" },
+  { label: "단체 조끼/모자", href: "#inquiry", image: "/images/category/vest-cap.jpg", desc: "안전조끼 · 단체 캡" },
+  { label: "근무복/후리스", href: "#inquiry", image: "/images/category/fleece.jpg", desc: "사무 근무복 · 방한 후리스" },
+  { label: "체육복/운동복", href: "#inquiry", image: "/images/category/sportswear.jpg", desc: "단체 체육복 · 트레이닝" },
+  { label: "단체티셔츠", href: "#inquiry", image: "/images/category/tshirt.jpg", desc: "행사 · 단체 라운드/카라티" },
+  { label: "안전화", href: "#inquiry", image: "/images/category/safety-shoes.jpg", desc: "현장 안전화" },
 ];
 
-/** 제작 과정 4단계 */
+/** 제작 과정 5단계 */
 export const processSteps: ProcessStep[] = [
-  { step: 1, title: "상담 · 견적", desc: "품목 · 수량 · 로고 여부를 알려주시면 견적을 드립니다." },
-  { step: 2, title: "시안 디자인", desc: "로고 위치 · 색상을 반영한 시안을 제작합니다." },
-  { step: 3, title: "샘플 확인", desc: "필요 시 샘플로 색감과 사이즈를 확인합니다." },
-  { step: 4, title: "대량 제작 · 납품", desc: "확정 후 제작하여 일정에 맞춰 납품합니다." },
+  { step: 1, title: "견적 상담", desc: "품목 · 수량 · 로고 여부를 알려주시면 견적을 드립니다." },
+  { step: 2, title: "주문 접수", desc: "견적 확정 후 사이즈 · 수량을 받아 주문을 접수합니다." },
+  { step: 3, title: "시안", desc: "로고 위치 · 색상을 반영한 시안을 제작해 확인받습니다." },
+  { step: 4, title: "제품 제작", desc: "시안 확정 후 본 제작에 들어갑니다." },
+  { step: 5, title: "제품 발송", desc: "완성된 제품을 일정에 맞춰 발송합니다." },
 ];
