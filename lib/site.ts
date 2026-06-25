@@ -13,7 +13,7 @@ export const site = {
   // 문의 채널 (실제 주소로 교체하세요)
   googleFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLScDKhReqJkTLEkl0FrgVm1ZAb0gSOPrOprkrTiYG1FQ01kr2Q/viewform", // 구글폼 견적/주문 신청서
-  kakaoUrl: "http://pf.kakao.com/_REPLACE_ME", // 카카오톡 채널
+  kakaoUrl: "http://pf.kakao.com/_VXXxfX", // 카카오톡 채널
   // TODO: danbinuri.kr 도메인 메일 개통 후 회사 메일로 교체
   email: "danbinuri25@naver.com",
   phone: "02-6448-7221", // 대표 전화
