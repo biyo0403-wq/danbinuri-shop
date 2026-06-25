@@ -17,6 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        {/* Pretendard 웹폰트 (CDN, 다운로드 불필요) */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"
+        />
+      </head>
       <body>
         <Header />
         <main className="min-h-[60vh]">{children}</main>
