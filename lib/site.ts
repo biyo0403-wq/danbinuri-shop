@@ -19,8 +19,6 @@ export const site = {
   phone: "02-6448-7221", // 대표 전화
   mobile: "010-5267-7208", // 휴대폰
 
-  instagramUrl: "https://instagram.com/REPLACE_ME",
-
   hours: "평일 10:00 - 18:00 / 주말·공휴일 휴무",
 
   company: {

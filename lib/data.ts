@@ -33,7 +33,7 @@ export const heroPanels: HeroPanel[] = [
   },
 ];
 
-/** 강점 4가지 */
+/** 강점 3가지 */
 export const strengths: Strength[] = [
   { id: "s1", title: "소량 제작 가능", desc: "한 벌부터 대량까지, 수량에 맞춰 제작합니다." },
   { id: "s3", title: "빠른 납기", desc: "급한 일정도 상담을 통해 최대한 맞춰 드립니다." },
