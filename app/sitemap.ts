@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: base, priority: 1 },
+    { url: `${base}/inquiry`, priority: 0.9 },
     { url: `${base}/brands`, priority: 0.8 },
     { url: `${base}/terms`, priority: 0.2 },
     { url: `${base}/privacy`, priority: 0.2 },
