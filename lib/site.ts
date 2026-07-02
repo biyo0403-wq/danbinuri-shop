@@ -6,9 +6,10 @@
 export const site = {
   name: "단비누리",
   nameEn: "DANBINURI",
-  tagline: "단체복 · 스포츠 유니폼 맞춤 제작",
+  url: "https://www.danbiwear.co.kr",
+  tagline: "단체복 · 작업복 맞춤 제작 · 브랜드 구매대행",
   description:
-    "축구·농구·야구·마라톤 등 단체복과 유니폼을 소량부터 대량까지 맞춤 제작합니다.",
+    "작업복·단체복·조끼·티셔츠를 한 벌부터 대량까지 맞춤 제작하고, 스포츠·아웃도어 브랜드 정품 구매대행을 함께 제공합니다.",
 
   // 문의 채널 (실제 주소로 교체하세요)
   googleFormUrl:
