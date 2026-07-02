@@ -53,7 +53,8 @@ export async function POST(req: Request) {
     );
   }
 
-  const { error } = await supabase.from("inquiries").insert(inquiry);
+  // 다른 사이트와 Supabase 프로젝트를 공유하므로 테이블 이름에 shop_ 접두사 사용
+  const { error } = await supabase.from("shop_inquiries").insert(inquiry);
   if (error) {
     console.error("[inquiry] DB 저장 실패:", error.message);
     return NextResponse.json(
@@ -118,7 +119,7 @@ async function sendNotifyEmail(inq: {
           <h2 style="color:#13294b">새 견적문의가 접수되었습니다</h2>
           <table style="border-collapse:collapse;font-size:14px">${rows}</table>
           <div style="margin-top:16px;padding:12px 16px;background:#f5f5f5;border-radius:8px;font-size:14px;white-space:pre-wrap">${inq.message}</div>
-          <p style="margin-top:16px;font-size:12px;color:#767676">Supabase 대시보드의 inquiries 테이블에서 전체 내역을 확인할 수 있습니다.</p>
+          <p style="margin-top:16px;font-size:12px;color:#767676">Supabase 대시보드의 shop_inquiries 테이블에서 전체 내역을 확인할 수 있습니다.</p>
         </div>`,
     }),
   });
