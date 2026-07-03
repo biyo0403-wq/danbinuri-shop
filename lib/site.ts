@@ -11,9 +11,7 @@ export const site = {
   description:
     "작업복·단체복·조끼·티셔츠를 한 벌부터 대량까지 맞춤 제작하고, 스포츠·아웃도어 브랜드 정품 구매대행을 함께 제공합니다.",
 
-  // 문의 채널 (실제 주소로 교체하세요)
-  googleFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLScDKhReqJkTLEkl0FrgVm1ZAb0gSOPrOprkrTiYG1FQ01kr2Q/viewform", // 구글폼 견적/주문 신청서
+  // 문의 채널 — 견적 신청은 자체 폼(/inquiry)으로 받는다
   kakaoUrl: "http://pf.kakao.com/_VXXxfX", // 카카오톡 채널
   // TODO: danbinuri.kr 도메인 메일 개통 후 회사 메일로 교체
   email: "danbinuri25@naver.com",

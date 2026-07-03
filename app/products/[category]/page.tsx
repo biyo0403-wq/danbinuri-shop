@@ -48,15 +48,13 @@ export default function CategoryPage({
             알려주시면 견적을 안내해 드립니다.
           </p>
           <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
-            <a
-              href={site.googleFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/inquiry?category=${encodeURIComponent(cat.label)}`}
               className="flex items-center justify-center gap-2 rounded-lg bg-point px-5 py-3 text-sm font-bold text-white hover:bg-blue-700"
             >
               <FileText className="h-4 w-4" />
               견적 신청하기
-            </a>
+            </Link>
             <a
               href={site.kakaoUrl}
               target="_blank"

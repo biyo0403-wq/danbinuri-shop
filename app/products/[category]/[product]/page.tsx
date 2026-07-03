@@ -49,15 +49,15 @@ export default function ProductPage({
           </p>
 
           <div className="mt-8 flex flex-col gap-3">
-            <a
-              href={site.googleFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/inquiry?category=${encodeURIComponent(
+                cat?.label ?? ""
+              )}&product=${encodeURIComponent(product.title)}`}
               className="flex items-center justify-center gap-2 rounded-lg bg-point px-5 py-4 text-base font-bold text-white hover:bg-blue-700"
             >
               <FileText className="h-5 w-5" />
-              이 제품 견적 신청하기 (구글폼)
-            </a>
+              이 제품 견적 신청하기
+            </Link>
             <div className="grid grid-cols-2 gap-3">
               <a
                 href={`tel:${site.phone}`}

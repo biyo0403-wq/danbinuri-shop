@@ -55,15 +55,13 @@ export default function BrandsPage() {
           브랜드 · 모델명 · 수량을 남겨주시면 빠르게 견적을 보내드립니다.
         </p>
         <div className="mx-auto mt-7 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
-          <a
-            href={site.googleFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={`/inquiry?category=${encodeURIComponent("브랜드 구매대행")}`}
             className="flex items-center justify-center gap-2 rounded-lg bg-point px-5 py-3 text-sm font-bold text-white hover:bg-blue-700"
           >
             <FileText className="h-4 w-4" />
             견적 신청하기
-          </a>
+          </Link>
           <a
             href={`tel:${site.phone}`}
             className="flex items-center justify-center gap-2 rounded-lg border border-line bg-white px-5 py-3 text-sm font-bold text-ink hover:bg-neutral-50"

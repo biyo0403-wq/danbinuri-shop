@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Phone, FileText, MessageCircle, Mail } from "lucide-react";
 import { site, mailto } from "@/lib/site";
 
@@ -16,16 +17,14 @@ export default function InquiryCTA() {
         </p>
 
         <div className="mx-auto mt-9 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2">
-          {/* 구글폼 (메인 CTA) */}
-          <a
-            href={site.googleFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* 견적문의 폼 (메인 CTA) */}
+          <Link
+            href="/inquiry"
             className="flex items-center justify-center gap-2 rounded-lg bg-point px-5 py-4 text-base font-bold text-white hover:bg-blue-700 sm:col-span-2"
           >
             <FileText className="h-5 w-5" />
-            견적 신청서 작성하기 (구글폼)
-          </a>
+            견적 신청서 작성하기
+          </Link>
 
           {/* 전화 */}
           <a

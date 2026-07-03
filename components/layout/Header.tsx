@@ -48,14 +48,12 @@ export default function Header() {
             <Phone className="h-4 w-4" />
             {site.phone}
           </a>
-          <a
-            href={site.googleFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/inquiry"
             className="rounded bg-point px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
           >
             무료 견적받기
-          </a>
+          </Link>
         </div>
 
         {/* 모바일 토글 */}
@@ -104,14 +102,13 @@ export default function Header() {
                 <Phone className="h-4 w-4" />
                 {site.phone}
               </a>
-              <a
-                href={site.googleFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/inquiry"
+                onClick={() => setOpen(false)}
                 className="rounded bg-point py-3 text-center text-sm font-bold text-white"
               >
                 무료 견적받기
-              </a>
+              </Link>
             </div>
           </div>
         </div>
