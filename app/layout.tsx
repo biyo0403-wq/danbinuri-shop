@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileCTABar from "@/components/layout/MobileCTABar";
 
 import { site } from "@/lib/site";
 
@@ -35,10 +36,12 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"
         />
       </head>
-      <body>
+      {/* 모바일에서는 하단 고정 CTA 바 높이만큼 여백 확보 */}
+      <body className="pb-20 lg:pb-0">
         <Header />
         <main className="min-h-[60vh]">{children}</main>
         <Footer />
+        <MobileCTABar />
       </body>
     </html>
   );
