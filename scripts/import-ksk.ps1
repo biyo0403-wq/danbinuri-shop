@@ -1,33 +1,68 @@
-﻿# KSK 제품 이미지 가져오기 (1회용 스크립트)
-# .import 스테이징 폴더의 원본을 웹용(리사이즈/압축)으로 변환해
+﻿# KSK 제품 이미지 전체 가져오기 (재분류판)
+# .import 스테이징(zip1/zip2)의 원본을 웹용(리사이즈/압축)으로 변환해
 # public/products/<카테고리>/<제품>/NN.jpg 로 저장하고 lib/products.ts 를 생성한다.
-# 재실행 시 대상 카테고리 폴더를 비우고 새로 만든다.
+# - 하위 폴더 제품 + 낱장 사진(번호별 자동 묶음) 모두 처리
+# - 신상품(NEW) 폴더는 다른 폴더와 중복이라 제외
+# - 재실행 시 대상 카테고리 출력 폴더를 비우고 새로 만든다 (이름표 lib/product-names.ts 는 건드리지 않음)
 
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Drawing
 
 $root   = "C:\Users\Y\Desktop\danbinuri-shop"
-$srcCat = Join-Path $root ".import\zip1\2026 SS KSK 이미지파일1(신상품,점퍼,조끼,티셔츠,제전복등)"
+$z1     = Join-Path $root ".import\zip1\2026 SS KSK 이미지파일1(신상품,점퍼,조끼,티셔츠,제전복등)"
+$z2     = Join-Path $root ".import\zip2\2026"
 $outDir = Join-Path $root "public\products"
 $maxEdge = 1400
 $quality = 82
 $maxImgs = 8
 
-# 홈 6품목 라벨 -> 제품 카테고리(slug) -> KSK 원본 폴더
-# src 가 비어 있으면 제품 없이 빈 카테고리만 생성한다(추후 제품 채울 예정).
+# 카테고리 -> KSK 원본 폴더(여러 개 가능). srcs 가 비면 제품 없는 빈 카테고리.
 $map = @(
-  @{ label = "작업복";         slug = "workwear";   src = "점퍼"   },
-  @{ label = "단체 조끼/모자";  slug = "vest";       src = "조끼"   },
-  @{ label = "단체티셔츠";      slug = "tshirt";     src = "티셔츠" },
-  @{ label = "근무복/후리스";   slug = "fleece";     src = ""       },
-  @{ label = "체육복/운동복";   slug = "sportswear"; src = ""       },
-  @{ label = "안전화";          slug = "safety";     src = ""       }
+  @{ label = "작업복"; slug = "workwear"; srcs = @(
+      (Join-Path $z1 "점퍼"),
+      (Join-Path $z2 "바지"),
+      (Join-Path $z2 "상의&하의 세트 (별도구매가능)"),
+      (Join-Path $z2 "스즈끼우주복,멜빵바지")
+  ) },
+  @{ label = "단체 조끼/모자"; slug = "vest"; srcs = @(
+      (Join-Path $z1 "조끼")
+  ) },
+  @{ label = "근무복/후리스"; slug = "fleece"; srcs = @(
+      (Join-Path $z1 "제전복,위생복,가운"),
+      (Join-Path $z2 "경비복"),
+      (Join-Path $z2 "민방위")
+  ) },
+  @{ label = "단체티셔츠"; slug = "tshirt"; srcs = @(
+      (Join-Path $z1 "티셔츠")
+  ) },
+  @{ label = "체육복/운동복"; slug = "sportswear"; srcs = @() },
+  @{ label = "안전화";        slug = "safety";     srcs = @() }
 )
 
 function Get-Slug([string]$name, [int]$idx) {
   $s = ($name -replace '[^A-Za-z0-9]+', '-').Trim('-').ToLower()
   if ([string]::IsNullOrWhiteSpace($s)) { $s = "p$idx" }
   return $s
+}
+
+# 낱장 파일명에서 제품 묶음 키 추출: 한글/공백 전까지의 선행 번호 토큰
+function Get-LooseKey([string]$base) {
+  $b = $base.Trim()
+  # "KP 720..." 처럼 영문+공백+번호는 붙여서 처리
+  $b = $b -replace '^([A-Za-z]+)\s+', '$1'
+  if ($b -match '^([A-Za-z0-9~&,\.\-]+)') {
+    $k = $Matches[1].Trim('-', '.', ',')
+    if ($k) { return $k }
+  }
+  return $b
+}
+
+# 표시용 제목 정리: 공급사 표기(-경신123), "복사" 꼬리 제거
+function Clean-Title([string]$s) {
+  $t = $s -replace '-?경신\d*', ''
+  $t = $t -replace '\s*복사\s*$', ''
+  $t = $t -replace '"', "'"
+  return $t.Trim()
 }
 
 function Save-Resized($srcPath, $destPath) {
@@ -54,8 +89,7 @@ $tsCats = @()
 $tsProds = @()
 
 foreach ($m in $map) {
-  # 원본 폴더(src)가 없으면 빈 카테고리만 등록
-  if ([string]::IsNullOrWhiteSpace($m.src)) {
+  if ($m.srcs.Count -eq 0) {
     $tsCats += @"
   {
     slug: "$($m.slug)",
@@ -63,31 +97,59 @@ foreach ($m in $map) {
     productSlugs: [],
   }
 "@
-    Write-Output ("  [$($m.slug)] (빈 카테고리)")
+    Write-Output ("[$($m.slug)] (빈 카테고리)")
     continue
   }
 
-  $catPath = Join-Path $srcCat $m.src
-  $catOut  = Join-Path $outDir $m.slug
+  $catOut = Join-Path $outDir $m.slug
   if (Test-Path $catOut) { Remove-Item $catOut -Recurse -Force }
   New-Item -ItemType Directory -Path $catOut -Force | Out-Null
 
+  # 1) 제품 후보 수집 (폴더 제품 + 낱장 묶음)
+  $items = @()
+  foreach ($src in $m.srcs) {
+    if (-not (Test-Path $src)) { Write-Output ("  !! 원본 폴더 없음: " + $src); continue }
+
+    foreach ($folder in (Get-ChildItem $src -Directory | Sort-Object Name)) {
+      if ($folder.Name -match '모음|기존제품') { continue }
+      $imgs = Get-ChildItem $folder.FullName -Recurse -File | Where-Object { $_.Extension -match '(?i)^\.(jpg|jpeg|png)$' }
+      if (-not $imgs) { continue }
+      $main = @($imgs | Where-Object { $_.Name -notmatch '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
+      $back = @($imgs | Where-Object { $_.Name -match '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
+      $items += @{ key = $folder.Name; title = (Clean-Title $folder.Name); files = (@($main) + @($back)) }
+    }
+
+    $loose = @(Get-ChildItem $src -File | Where-Object { $_.Extension -match '(?i)^\.(jpg|jpeg|png)$' })
+    $groups = @{}
+    foreach ($f in $loose) {
+      $base = [System.IO.Path]::GetFileNameWithoutExtension($f.Name)
+      $k = Get-LooseKey $base
+      if (-not $groups.ContainsKey($k)) { $groups[$k] = @() }
+      $groups[$k] += $f
+    }
+    foreach ($k in ($groups.Keys | Sort-Object)) {
+      $fs = @($groups[$k])
+      $main = @($fs | Where-Object { $_.Name -notmatch '뒤|뒷' } | Sort-Object Name)
+      $back = @($fs | Where-Object { $_.Name -match '뒤|뒷' } | Sort-Object Name)
+      if ($fs.Count -eq 1) {
+        $t = Clean-Title ([System.IO.Path]::GetFileNameWithoutExtension($fs[0].Name))
+      } else {
+        $t = Clean-Title $k
+      }
+      $items += @{ key = $k; title = $t; files = (@($main) + @($back)) }
+    }
+  }
+
+  # 2) 저장 + TS 조각 생성
   $prodSlugs = @()
   $i = 0
-  foreach ($folder in (Get-ChildItem $catPath -Directory | Sort-Object Name)) {
-    if ($folder.Name -match '모음') { continue }   # "반팔컷 모음" 등 모음 폴더 제외
+  foreach ($it in $items) {
     $i++
-    $slug = Get-Slug $folder.Name $i
-    # 슬러그 중복 방지
+    $slug = Get-Slug $it.key $i
     if ($prodSlugs -contains $slug) { $slug = "$slug-$i" }
 
-    $imgs = Get-ChildItem $folder.FullName -Recurse -File | Where-Object { $_.Extension -match '(?i)\.(jpg|jpeg|png)$' }
-    # 사이즈표/상세 이미지는 뒤로
-    $main = $imgs | Where-Object { $_.Name -notmatch '(?i)(spec|size|사이즈|상세|스펙|3d)' }
-    $spec = $imgs | Where-Object { $_.Name -match     '(?i)(spec|size|사이즈|상세|스펙)' }
-    $ordered = @($main) + @($spec)
+    $ordered = @($it.files | Select-Object -First $maxImgs)
     if ($ordered.Count -eq 0) { continue }
-    $ordered = $ordered | Select-Object -First $maxImgs
 
     $prodOut = Join-Path $catOut $slug
     New-Item -ItemType Directory -Path $prodOut -Force | Out-Null
@@ -100,20 +162,19 @@ foreach ($m in $map) {
       $files += "/products/$($m.slug)/$slug/$fn"
     }
 
-    $title = $folder.Name -replace '"', "'"
     $imgList = ($files | ForEach-Object { "      `"$_`"" }) -join ",`n"
     $tsProds += @"
   {
     slug: "$slug",
     category: "$($m.slug)",
-    title: "$title",
+    title: "$($it.title)",
     images: [
 $imgList
     ],
   }
 "@
     $prodSlugs += $slug
-    Write-Output ("  [$($m.slug)] $slug  ($($files.Count)장)  <= $($folder.Name)")
+    Write-Output ("  [$($m.slug)] $slug  ($($files.Count)장)  <= $($it.title)")
   }
 
   $slugArr = ($prodSlugs | ForEach-Object { "`"$_`"" }) -join ", "
@@ -124,10 +185,12 @@ $imgList
     productSlugs: [$slugArr],
   }
 "@
+  Write-Output ("[$($m.slug)] 제품 " + $prodSlugs.Count + "개")
 }
 
 $ts = @"
 // 이 파일은 scripts/import-ksk.ps1 로 자동 생성됩니다. 직접 수정하지 마세요.
+// 표시 이름을 바꾸려면 lib/product-names.ts 에 추가하세요.
 export type ProductCategory = {
   slug: string;
   label: string;

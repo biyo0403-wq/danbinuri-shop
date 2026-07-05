@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone, FileText, MessageCircle } from "lucide-react";
 import { products, getProduct, getCategory } from "@/lib/products";
+import { displayTitle } from "@/lib/product-names";
 import { site } from "@/lib/site";
 import ProductGallery from "@/components/products/ProductGallery";
 
@@ -32,16 +33,16 @@ export default function ProductPage({
           {cat?.label}
         </Link>
         <span className="mx-1">/</span>
-        <span className="text-ink">{product.title}</span>
+        <span className="text-ink">{displayTitle(product)}</span>
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-        <ProductGallery images={product.images} title={product.title} />
+        <ProductGallery images={product.images} title={displayTitle(product)} />
 
         <div>
           <p className="text-sm font-bold text-point">{cat?.label}</p>
           <h1 className="mt-2 text-2xl font-extrabold tracking-tight lg:text-3xl">
-            {product.title}
+            {displayTitle(product)}
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-muted">
             품목 · 수량 · 로고 여부를 알려주시면 빠르게 견적을 보내드립니다.
