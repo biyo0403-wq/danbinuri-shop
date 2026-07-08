@@ -1,8 +1,8 @@
-﻿# KSK 제품 이미지 전체 가져오기 (재분류판)
+﻿# KSK 제품 이미지 가져오기 (세부카테고리판)
 # .import 스테이징(zip1/zip2)의 원본을 웹용(리사이즈/압축)으로 변환해
 # public/products/<카테고리>/<제품>/NN.jpg 로 저장하고 lib/products.ts 를 생성한다.
-# - 하위 폴더 제품 + 낱장 사진(번호별 자동 묶음) 모두 처리
-# - 신상품(NEW) 폴더는 다른 폴더와 중복이라 제외
+# - 각 제품 카테고리 안에 세부카테고리(subCategory)를 함께 부여한다.
+# - 제품당 이미지는 최대 4장까지만 저장한다.
 # - 재실행 시 대상 카테고리 출력 폴더를 비우고 새로 만든다 (이름표 lib/product-names.ts 는 건드리지 않음)
 
 $ErrorActionPreference = "Stop"
@@ -14,29 +14,51 @@ $z2     = Join-Path $root ".import\zip2\2026"
 $outDir = Join-Path $root "public\products"
 $maxEdge = 1400
 $quality = 82
-$maxImgs = 8
+$maxImgs = 4
 
-# 카테고리 -> KSK 원본 폴더(여러 개 가능). srcs 가 비면 제품 없는 빈 카테고리.
+# 조끼 세부카테고리: 폴더명/낱장 그룹키 -> 세부카테고리
+$vestSubcatMap = @{
+  "51" = "기본형"; "51-A" = "기본형"; "52" = "기본형"; "52-A" = "기본형"; "53" = "기본형"; "53-A" = "기본형"
+  "550-A" = "기본형"; "551" = "기본형"; "552" = "기본형"; "560~563" = "기본형"
+  "57" = "기본형"; "57-A" = "기본형"; "58" = "기본형"; "58-A" = "기본형"; "59" = "기본형"; "59-A" = "기본형"
+  "64" = "기본형"; "64-A" = "기본형"; "66" = "기본형"; "66-A" = "기본형"; "662" = "기본형"; "663" = "기본형"; "924" = "기본형"
+  "65 회색망사조끼" = "기본형"; "TC망사조끼" = "기본형"; "TC조끼" = "기본형"
+  "79 경찰,보안조끼 형광" = "안전조끼"; "80 곤색망사조끼 신형" = "안전조끼"; "81 검정망사조끼 신상" = "안전조끼"
+  "71.72 밀리터리 망사조끼" = "밀리터리"
+  "775" = "특수다용도"; "776" = "특수다용도"; "774 특수조끼  블랙" = "특수다용도"
+  "777.778.779 특수조끼3종" = "특수다용도"; "925" = "특수다용도"; "사다리조끼 781-789" = "특수다용도"; "665" = "특수다용도"
+  "922" = "팀조끼"; "타스란 42.43.44" = "팀조끼"; "KSK2560(챠콜+오렌지)조끼" = "팀조끼"; "KSK2599(챠콜+블루)조끼" = "팀조끼"
+}
+$vestSubcatDefault = "기본형"
+
+# 티셔츠 세부카테고리: 예외만 지정, 나머지는 전부 카라
+$tshirtSubcatMap = @{
+  "587(그레이)라운드티셔츠" = "라운드"
+  "579,580,581" = "기능성집업"
+}
+$tshirtSubcatDefault = "카라"
+
+# 카테고리 -> KSK 원본 폴더(경로+세부카테고리). srcs 가 비면 제품 없는 빈 카테고리.
 $map = @(
-  @{ label = "작업복"; slug = "workwear"; srcs = @(
-      (Join-Path $z1 "점퍼"),
-      (Join-Path $z2 "바지"),
-      (Join-Path $z2 "상의&하의 세트 (별도구매가능)"),
-      (Join-Path $z2 "스즈끼우주복,멜빵바지")
+  @{ label = "작업복"; slug = "workwear"; subcatMode = "bysrc"; srcs = @(
+      @{ path = (Join-Path $z1 "점퍼");                              subcat = "점퍼/자켓" },
+      @{ path = (Join-Path $z2 "바지");                              subcat = "바지" },
+      @{ path = (Join-Path $z2 "상의&하의 세트 (별도구매가능)");       subcat = "상하 세트" },
+      @{ path = (Join-Path $z2 "스즈끼우주복,멜빵바지");              subcat = "우주복/멜빵바지" }
   ) },
-  @{ label = "단체 조끼/모자"; slug = "vest"; srcs = @(
-      (Join-Path $z1 "조끼")
+  @{ label = "단체 조끼/모자"; slug = "vest"; subcatMode = "map"; subcatMap = $vestSubcatMap; subcatDefault = $vestSubcatDefault; srcs = @(
+      @{ path = (Join-Path $z1 "조끼"); subcat = $null }
   ) },
-  @{ label = "근무복/후리스"; slug = "fleece"; srcs = @(
-      (Join-Path $z1 "제전복,위생복,가운"),
-      (Join-Path $z2 "경비복"),
-      (Join-Path $z2 "민방위")
+  @{ label = "근무복/후리스"; slug = "fleece"; subcatMode = "bysrc"; srcs = @(
+      @{ path = (Join-Path $z1 "제전복,위생복,가운"); subcat = "제전복/위생복/가운" },
+      @{ path = (Join-Path $z2 "경비복");             subcat = "경비복" },
+      @{ path = (Join-Path $z2 "민방위");             subcat = "민방위복" }
   ) },
-  @{ label = "단체티셔츠"; slug = "tshirt"; srcs = @(
-      (Join-Path $z1 "티셔츠")
+  @{ label = "단체티셔츠"; slug = "tshirt"; subcatMode = "map"; subcatMap = $tshirtSubcatMap; subcatDefault = $tshirtSubcatDefault; srcs = @(
+      @{ path = (Join-Path $z1 "티셔츠"); subcat = $null }
   ) },
-  @{ label = "체육복/운동복"; slug = "sportswear"; srcs = @() },
-  @{ label = "안전화";        slug = "safety";     srcs = @() }
+  @{ label = "체육복/운동복"; slug = "sportswear"; subcatMode = "bysrc"; srcs = @() },
+  @{ label = "안전화";        slug = "safety";     subcatMode = "bysrc"; srcs = @() }
 )
 
 function Get-Slug([string]$name, [int]$idx) {
@@ -48,7 +70,6 @@ function Get-Slug([string]$name, [int]$idx) {
 # 낱장 파일명에서 제품 묶음 키 추출: 한글/공백 전까지의 선행 번호 토큰
 function Get-LooseKey([string]$base) {
   $b = $base.Trim()
-  # "KP 720..." 처럼 영문+공백+번호는 붙여서 처리
   $b = $b -replace '^([A-Za-z]+)\s+', '$1'
   if ($b -match '^([A-Za-z0-9~&,\.\-]+)') {
     $k = $Matches[1].Trim('-', '.', ',')
@@ -105,10 +126,17 @@ foreach ($m in $map) {
   if (Test-Path $catOut) { Remove-Item $catOut -Recurse -Force }
   New-Item -ItemType Directory -Path $catOut -Force | Out-Null
 
-  # 1) 제품 후보 수집 (폴더 제품 + 낱장 묶음)
+  # 1) 제품 후보 수집 (폴더 제품 + 낱장 묶음), 세부카테고리 부여
   $items = @()
-  foreach ($src in $m.srcs) {
+  foreach ($srcObj in $m.srcs) {
+    $src = $srcObj.path
     if (-not (Test-Path $src)) { Write-Output ("  !! 원본 폴더 없음: " + $src); continue }
+
+    function Resolve-Subcat($key) {
+      if ($m.subcatMode -eq "bysrc") { return $srcObj.subcat }
+      if ($m.subcatMap.ContainsKey($key)) { return $m.subcatMap[$key] }
+      return $m.subcatDefault
+    }
 
     foreach ($folder in (Get-ChildItem $src -Directory | Sort-Object Name)) {
       if ($folder.Name -match '모음|기존제품') { continue }
@@ -116,7 +144,8 @@ foreach ($m in $map) {
       if (-not $imgs) { continue }
       $main = @($imgs | Where-Object { $_.Name -notmatch '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
       $back = @($imgs | Where-Object { $_.Name -match '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
-      $items += @{ key = $folder.Name; title = (Clean-Title $folder.Name); files = (@($main) + @($back)) }
+      $subcat = Resolve-Subcat $folder.Name
+      $items += @{ key = $folder.Name; title = (Clean-Title $folder.Name); files = (@($main) + @($back)); subcat = $subcat }
     }
 
     $loose = @(Get-ChildItem $src -File | Where-Object { $_.Extension -match '(?i)^\.(jpg|jpeg|png)$' })
@@ -136,7 +165,8 @@ foreach ($m in $map) {
       } else {
         $t = Clean-Title $k
       }
-      $items += @{ key = $k; title = $t; files = (@($main) + @($back)) }
+      $subcat = Resolve-Subcat $k
+      $items += @{ key = $k; title = $t; files = (@($main) + @($back)); subcat = $subcat }
     }
   }
 
@@ -167,6 +197,7 @@ foreach ($m in $map) {
   {
     slug: "$slug",
     category: "$($m.slug)",
+    subCategory: "$($it.subcat)",
     title: "$($it.title)",
     images: [
 $imgList
@@ -174,7 +205,7 @@ $imgList
   }
 "@
     $prodSlugs += $slug
-    Write-Output ("  [$($m.slug)] $slug  ($($files.Count)장)  <= $($it.title)")
+    Write-Output ("  [$($m.slug)/$($it.subcat)] $slug  ($($files.Count)장)  <= $($it.title)")
   }
 
   $slugArr = ($prodSlugs | ForEach-Object { "`"$_`"" }) -join ", "
@@ -200,6 +231,7 @@ export type ProductCategory = {
 export type Product = {
   slug: string;
   category: string;
+  subCategory: string;
   title: string;
   images: string[];
 };

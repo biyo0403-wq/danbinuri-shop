@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FileText, MessageCircle } from "lucide-react";
-import Img from "@/components/ui/Img";
 import { site } from "@/lib/site";
 import {
   productCategories,
   getCategory,
   getProductsByCategory,
 } from "@/lib/products";
-import { displayTitle } from "@/lib/product-names";
+import ProductGridWithTabs from "@/components/products/ProductGridWithTabs";
 
 export function generateStaticParams() {
   return productCategories.map((c) => ({ category: c.slug }));
@@ -68,25 +67,8 @@ export default function CategoryPage({
           </div>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          {list.map((p) => (
-          <Link
-            key={p.slug}
-            href={`/products/${cat.slug}/${p.slug}`}
-            className="group block"
-          >
-            <div className="aspect-[3/4] overflow-hidden rounded-lg bg-neutral-100">
-              <Img
-                src={p.images[0]}
-                alt={displayTitle(p)}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <h3 className="mt-2 text-sm font-bold lg:text-base">
-              {displayTitle(p)}
-            </h3>
-            </Link>
-          ))}
+        <div className="mt-8">
+          <ProductGridWithTabs catSlug={cat.slug} products={list} />
         </div>
       )}
     </section>
