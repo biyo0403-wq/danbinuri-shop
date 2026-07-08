@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
           {/* 좌측: 브랜드 + 연락 */}
           <div>
-            <p className="text-2xl font-extrabold text-white">{site.nameEn}</p>
+            <p className="text-2xl font-extrabold text-white">{c.bizName}</p>
             <p className="mt-1 text-sm">{site.tagline}</p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -60,7 +60,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-10 border-t border-white/10 pt-6 text-xs text-white/50">
-          © 2026 {site.nameEn}. All rights reserved.
+          © 2026 {c.bizName}. All rights reserved.
         </p>
       </div>
     </footer>

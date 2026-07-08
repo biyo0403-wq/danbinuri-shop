@@ -12,11 +12,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">
-      <div className="mx-auto flex h-16 max-w-shell items-center gap-4 px-4 lg:h-[72px] lg:px-5">
+      <div className="mx-auto flex h-20 max-w-shell items-center gap-4 px-4 lg:h-24 lg:px-5">
         {/* 로고 */}
         <Link href="/" className="flex shrink-0 items-baseline gap-2">
-          <span className="text-xl font-extrabold tracking-tight text-brand lg:text-2xl">
-            {site.nameEn}
+          <span className="text-2xl font-extrabold tracking-tight text-brand lg:text-3xl">
+            {site.name}
           </span>
           <span className="hidden text-xs text-muted sm:inline">
             단체복 제작
@@ -71,9 +71,9 @@ export default function Header() {
         <div className="fixed inset-0 z-[60] lg:hidden">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-0 h-full w-[80%] max-w-xs bg-white">
-            <div className="flex h-16 items-center justify-between border-b border-line px-4">
-              <span className="text-lg font-extrabold text-brand">
-                {site.nameEn}
+            <div className="flex h-20 items-center justify-between border-b border-line px-4">
+              <span className="text-xl font-extrabold text-brand">
+                {site.name}
               </span>
               <button aria-label="닫기" onClick={() => setOpen(false)}>
                 <X className="h-6 w-6" />
