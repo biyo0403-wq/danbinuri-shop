@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     description: site.description,
     images: [{ url: "/images/og.jpg", width: 1200, height: 630 }],
   },
+  // 네이버 서치어드바이저 사이트 소유 확인
+  verification: {
+    other: {
+      "naver-site-verification": "56537eba795c088651debbbf736b41df2cc48b6d",
+    },
+  },
 };
 
 export default function RootLayout({
