@@ -1318,7 +1318,7 @@ export const products: Product[] = [
   {
     slug: "54-ksk",
     category: "fleece",
-    subCategory: "제전복/위생복/가운",
+    subCategory: "가운",
     title: "54-KSK",
     images: [
       "/products/fleece/54-ksk/01.jpg"
@@ -1327,7 +1327,7 @@ export const products: Product[] = [
   {
     slug: "55-ksk",
     category: "fleece",
-    subCategory: "제전복/위생복/가운",
+    subCategory: "가운",
     title: "55-KSK",
     images: [
       "/products/fleece/55-ksk/01.jpg"
@@ -1336,7 +1336,7 @@ export const products: Product[] = [
   {
     slug: "67-61-62",
     category: "fleece",
-    subCategory: "제전복/위생복/가운",
+    subCategory: "병원복",
     title: "67&61&62 위생복,약사까운",
     images: [
       "/products/fleece/67-61-62/01.jpg"
@@ -1345,7 +1345,7 @@ export const products: Product[] = [
   {
     slug: "904",
     category: "fleece",
-    subCategory: "제전복/위생복/가운",
+    subCategory: "방진복",
     title: "904 제전복 반팔",
     images: [
       "/products/fleece/904/01.jpg"
@@ -1354,7 +1354,7 @@ export const products: Product[] = [
   {
     slug: "905",
     category: "fleece",
-    subCategory: "제전복/위생복/가운",
+    subCategory: "방진복",
     title: "905",
     images: [
       "/products/fleece/905/01.jpg",

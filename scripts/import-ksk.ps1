@@ -2,6 +2,7 @@
 # .import 스테이징(zip1/zip2)의 원본을 웹용(리사이즈/압축)으로 변환해
 # public/products/<카테고리>/<제품>/NN.jpg 로 저장하고 lib/products.ts 를 생성한다.
 # - 각 제품 카테고리 안에 세부카테고리(subCategory)를 함께 부여한다.
+# - 원본 폴더(src) 하나는 고정 세부카테고리(subcat) 또는 항목별 매핑(subcatMap+subcatDefault) 중 하나를 가진다.
 # - 제품당 이미지는 최대 4장까지만 저장한다.
 # - 재실행 시 대상 카테고리 출력 폴더를 비우고 새로 만든다 (이름표 lib/product-names.ts 는 건드리지 않음)
 
@@ -38,27 +39,40 @@ $tshirtSubcatMap = @{
 }
 $tshirtSubcatDefault = "카라"
 
-# 카테고리 -> KSK 원본 폴더(경로+세부카테고리). srcs 가 비면 제품 없는 빈 카테고리.
+# 제전복,위생복,가운 폴더: 실물 확인 결과로 가운/병원복/방진복 구분
+# (54,55-KSK: 민무늬 콜라 가운 / 67&61&62: 병원 근무 장면(위생복+약사가운) / 904,905: 제전 스트라이프 원단)
+$gownSubcatMap = @{
+  "54-KSK" = "가운"
+  "55-KSK" = "가운"
+  "67&61&62" = "병원복"
+  "904" = "방진복"
+  "905" = "방진복"
+}
+$gownSubcatDefault = "가운"
+
+# 카테고리 -> KSK 원본 폴더.
+# 각 src 는 subcat(고정 세부카테고리) 또는 subcatMap+subcatDefault(항목별 매핑) 중 하나를 가진다.
+# srcs 가 비면 제품 없는 빈 카테고리.
 $map = @(
-  @{ label = "작업복"; slug = "workwear"; subcatMode = "bysrc"; srcs = @(
+  @{ label = "작업복"; slug = "workwear"; srcs = @(
       @{ path = (Join-Path $z1 "점퍼");                              subcat = "점퍼/자켓" },
       @{ path = (Join-Path $z2 "바지");                              subcat = "바지" },
       @{ path = (Join-Path $z2 "상의&하의 세트 (별도구매가능)");       subcat = "상하 세트" },
       @{ path = (Join-Path $z2 "스즈끼우주복,멜빵바지");              subcat = "우주복/멜빵바지" }
   ) },
-  @{ label = "단체 조끼/모자"; slug = "vest"; subcatMode = "map"; subcatMap = $vestSubcatMap; subcatDefault = $vestSubcatDefault; srcs = @(
-      @{ path = (Join-Path $z1 "조끼"); subcat = $null }
+  @{ label = "단체 조끼/모자"; slug = "vest"; srcs = @(
+      @{ path = (Join-Path $z1 "조끼"); subcatMap = $vestSubcatMap; subcatDefault = $vestSubcatDefault }
   ) },
-  @{ label = "근무복/후리스"; slug = "fleece"; subcatMode = "bysrc"; srcs = @(
-      @{ path = (Join-Path $z1 "제전복,위생복,가운"); subcat = "제전복/위생복/가운" },
+  @{ label = "근무복/후리스"; slug = "fleece"; srcs = @(
+      @{ path = (Join-Path $z1 "제전복,위생복,가운"); subcatMap = $gownSubcatMap; subcatDefault = $gownSubcatDefault },
       @{ path = (Join-Path $z2 "경비복");             subcat = "경비복" },
       @{ path = (Join-Path $z2 "민방위");             subcat = "민방위복" }
   ) },
-  @{ label = "단체티셔츠"; slug = "tshirt"; subcatMode = "map"; subcatMap = $tshirtSubcatMap; subcatDefault = $tshirtSubcatDefault; srcs = @(
-      @{ path = (Join-Path $z1 "티셔츠"); subcat = $null }
+  @{ label = "단체티셔츠"; slug = "tshirt"; srcs = @(
+      @{ path = (Join-Path $z1 "티셔츠"); subcatMap = $tshirtSubcatMap; subcatDefault = $tshirtSubcatDefault }
   ) },
-  @{ label = "체육복/운동복"; slug = "sportswear"; subcatMode = "bysrc"; srcs = @() },
-  @{ label = "안전화";        slug = "safety";     subcatMode = "bysrc"; srcs = @() }
+  @{ label = "체육복/운동복"; slug = "sportswear"; srcs = @() },
+  @{ label = "안전화";        slug = "safety";     srcs = @() }
 )
 
 function Get-Slug([string]$name, [int]$idx) {
@@ -84,6 +98,12 @@ function Clean-Title([string]$s) {
   $t = $t -replace '\s*복사\s*$', ''
   $t = $t -replace '"', "'"
   return $t.Trim()
+}
+
+function Resolve-Subcat($srcObj, $key) {
+  if ($srcObj.subcat) { return $srcObj.subcat }
+  if ($srcObj.subcatMap -and $srcObj.subcatMap.ContainsKey($key)) { return $srcObj.subcatMap[$key] }
+  return $srcObj.subcatDefault
 }
 
 function Save-Resized($srcPath, $destPath) {
@@ -132,19 +152,13 @@ foreach ($m in $map) {
     $src = $srcObj.path
     if (-not (Test-Path $src)) { Write-Output ("  !! 원본 폴더 없음: " + $src); continue }
 
-    function Resolve-Subcat($key) {
-      if ($m.subcatMode -eq "bysrc") { return $srcObj.subcat }
-      if ($m.subcatMap.ContainsKey($key)) { return $m.subcatMap[$key] }
-      return $m.subcatDefault
-    }
-
     foreach ($folder in (Get-ChildItem $src -Directory | Sort-Object Name)) {
       if ($folder.Name -match '모음|기존제품') { continue }
       $imgs = Get-ChildItem $folder.FullName -Recurse -File | Where-Object { $_.Extension -match '(?i)^\.(jpg|jpeg|png)$' }
       if (-not $imgs) { continue }
       $main = @($imgs | Where-Object { $_.Name -notmatch '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
       $back = @($imgs | Where-Object { $_.Name -match '(?i)(spec|size|사이즈|상세|스펙|3d|뒤|뒷)' } | Sort-Object Name)
-      $subcat = Resolve-Subcat $folder.Name
+      $subcat = Resolve-Subcat $srcObj $folder.Name
       $items += @{ key = $folder.Name; title = (Clean-Title $folder.Name); files = (@($main) + @($back)); subcat = $subcat }
     }
 
@@ -165,7 +179,7 @@ foreach ($m in $map) {
       } else {
         $t = Clean-Title $k
       }
-      $subcat = Resolve-Subcat $k
+      $subcat = Resolve-Subcat $srcObj $k
       $items += @{ key = $k; title = $t; files = (@($main) + @($back)); subcat = $subcat }
     }
   }
