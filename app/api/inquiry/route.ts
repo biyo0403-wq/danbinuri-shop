@@ -111,7 +111,11 @@ async function sendNotifyEmail(inq: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "단비누리 견적문의 <onboarding@resend.dev>",
+      // danbinuri.kr 도메인을 Resend 에서 인증하면 INQUIRY_FROM_EMAIL 로 교체.
+      // 미인증 상태에서는 onboarding@resend.dev 로만 발송 가능(본인 메일로만 수신).
+      from:
+        process.env.INQUIRY_FROM_EMAIL ||
+        "단비누리 견적문의 <onboarding@resend.dev>",
       to: [to],
       subject: `[견적문의] ${inq.name} — ${inq.category || "품목 미지정"}`,
       html: `

@@ -13,8 +13,7 @@ export const site = {
 
   // 문의 채널 — 견적 신청은 자체 폼(/inquiry)으로 받는다
   kakaoUrl: "http://pf.kakao.com/_VXXxfX", // 카카오톡 채널
-  // TODO: danbinuri.kr 도메인 메일 개통 후 회사 메일로 교체
-  email: "danbinuri25@naver.com",
+  email: "danbinuri25@danbinuri.kr", // 회사 대표 메일
   phone: "02-6448-7221", // 대표 전화
   mobile: "010-5267-7208", // 휴대폰
 
