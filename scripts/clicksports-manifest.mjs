@@ -15,6 +15,9 @@ function slugFromName(goodsNo, rawName) {
   return s || `p${goodsNo}`;
 }
 
+// 중복/제외할 goodsNo (20254 = 20252와 동일한 쿨론 긴팔 티셔츠 중복 등록)
+const SKIP = new Set(["20254"]);
+
 // 1) Downloads 폴더 파일을 goodsNo 별로 그룹
 const files = fs.readdirSync(downloadsDir).filter((f) => /\.(jpg|jpeg|png)$/i.test(f));
 const byGoods = {};
@@ -25,6 +28,7 @@ for (const f of files) {
     continue;
   }
   const no = m[1];
+  if (SKIP.has(no)) continue;
   (byGoods[no] ||= []).push(f);
 }
 

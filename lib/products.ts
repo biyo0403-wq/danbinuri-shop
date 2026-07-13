@@ -33,7 +33,7 @@ export const productCategories: ProductCategory[] = [
   {
     slug: "tshirt",
     label: "단체티셔츠",
-    productSlugs: ["ksk-2626", "ksk-500-500-1", "ksk-2628", "ksk-2629", "ksk-583-592", "ksk-583-592-20254", "ksk-520", "ksk-574-575", "ksk-510", "ksk-528", "ksk-593", "ksk-594", "ksk-576-577-578", "ksk-595", "ksk-591", "ksk-580-581", "ksk-584-585-586-587", "ksk-579"],
+    productSlugs: ["ksk-2626", "ksk-500-500-1", "ksk-2628", "ksk-2629", "ksk-583-592", "ksk-520", "ksk-574-575", "ksk-510", "ksk-528", "ksk-593", "ksk-594", "ksk-576-577-578", "ksk-595", "ksk-591", "ksk-580-581", "ksk-584-585-586-587", "ksk-579"],
   },
   {
     slug: "sportswear",
@@ -802,15 +802,6 @@ export const products: Product[] = [
     title: "쿨론 긴팔 티셔츠",
     images: [
       "/products/tshirt/ksk-583-592/01.jpg"
-    ],
-  },
-  {
-    slug: "ksk-583-592-20254",
-    category: "tshirt",
-    subCategory: "카라",
-    title: "쿨론 긴팔 티셔츠",
-    images: [
-      "/products/tshirt/ksk-583-592-20254/01.jpg"
     ],
   },
   {
