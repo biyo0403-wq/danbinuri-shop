@@ -6,12 +6,12 @@ import { CheckCircle2, Loader2, Phone, MessageCircle } from "lucide-react";
 import { site } from "@/lib/site";
 
 const CATEGORY_OPTIONS = [
-  "작업복",
-  "단체 조끼/모자",
-  "근무복/후리스",
-  "체육복/운동복",
+  "근무복/작업복",
+  "단체조끼",
+  "점퍼(바람막이/후리스/패딩)",
   "단체티셔츠",
-  "안전화",
+  "후드/맨투맨",
+  "안전화/모자",
   "브랜드 구매대행",
   "기타",
 ];

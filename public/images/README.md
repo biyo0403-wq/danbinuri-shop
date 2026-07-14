@@ -9,12 +9,12 @@
 - hero-vest.jpg     (안전조끼 · 모자)
 
 ## category/ — 제작 품목 6종 (권장 가로형 800×600)
-- uniform.jpg        (작업복)
-- vest-cap.jpg       (단체 조끼/모자)
-- fleece.jpg         (근무복/후리스)
-- sportswear.jpg     (체육복/운동복)
-- tshirt.jpg         (단체티셔츠)
-- safety-shoes.jpg   (안전화)
+- workwear.jpg  (근무복/작업복)
+- vest.jpg      (단체조끼)
+- jacket.jpg    (점퍼 — 바람막이/후리스/패딩)
+- tshirt.jpg    (단체티셔츠)
+- hoodie.jpg    (후드/맨투맨)
+- safety.jpg    (안전화/모자)
 
 ## marking/ — 로고 마킹 방식 3종 (권장 가로형 800×600)
 - embroidery.jpg  (자수)
@@ -22,4 +22,5 @@
 - silk.jpg        (실크인쇄)
 
 > 품목·문구·연락처 등 내용은 `lib/data.ts` 와 `lib/site.ts` 에서 수정합니다.
+> 제품 카테고리·세부카테고리 구조는 `lib/categories.ts` 에서 관리합니다.
 > 전화번호 / 구글폼 / 카카오톡 / 이메일 주소는 모두 `lib/site.ts` 한 곳에서 관리합니다.
