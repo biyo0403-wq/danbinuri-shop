@@ -24,10 +24,24 @@ export const productCategories: ProductCategory[] = [
   { slug: "jacket", label: "점퍼(바람막이/후리스/패딩)", productSlugs: [] },
   { slug: "tshirt", label: "단체티셔츠", productSlugs: [] },
   { slug: "hoodie", label: "후드/맨투맨", productSlugs: [] },
-  { slug: "safety", label: "안전화/모자", productSlugs: [] },
+  { slug: "safety", label: "안전화/모자", productSlugs: ["boa"] },
 ];
 
-export const products: Product[] = [];
+export const products: Product[] = [
+  {
+    slug: "boa",
+    category: "safety",
+    subCategory: "안전화",
+    title: "다이얼락(BOA) 다목적안전화",
+    images: [
+      "/products/safety/boa/01.jpg",
+      "/products/safety/boa/02.jpg",
+      "/products/safety/boa/03.jpg",
+      "/products/safety/boa/04.jpg",
+      "/products/safety/boa/05.jpg",
+    ],
+  },
+];
 
 export function getCategory(slug: string) {
   return productCategories.find((c) => c.slug === slug);
