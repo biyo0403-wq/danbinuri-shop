@@ -33,6 +33,13 @@ export const heroPanels: HeroPanel[] = [
   },
 ];
 
+/** 인증마크 (헤더 로고 옆에 작게 표시) */
+export const certBadges = [
+  { label: "중소기업 확인", image: "/images/certs/cert-sme.jpg" },
+  { label: "창업기업 확인", image: "/images/certs/cert-startup.jpg" },
+  { label: "여성기업 확인", image: "/images/certs/cert-women.jpg" },
+];
+
 /** 강점 3가지 */
 export const strengths: Strength[] = [
   { id: "s1", title: "소량 제작 가능", desc: "한 벌부터 대량까지, 수량에 맞춰 제작합니다." },

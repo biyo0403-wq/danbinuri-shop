@@ -5,7 +5,9 @@ import Link from "next/link";
 import { Phone, Menu, X } from "lucide-react";
 import { nav } from "@/lib/nav";
 import { site } from "@/lib/site";
+import { certBadges } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import Img from "@/components/ui/Img";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -13,15 +15,32 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">
       <div className="mx-auto flex h-20 max-w-shell items-center gap-4 px-4 lg:h-24 lg:px-5">
-        {/* 로고 */}
-        <Link href="/" className="flex shrink-0 items-baseline gap-2">
-          <span className="text-2xl font-extrabold tracking-tight text-brand lg:text-3xl">
-            {site.name}
-          </span>
-          <span className="hidden text-xs text-muted sm:inline">
-            단체복 제작
-          </span>
-        </Link>
+        {/* 로고 + 인증마크 */}
+        <div className="flex shrink-0 items-center gap-3">
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="text-2xl font-extrabold tracking-tight text-brand lg:text-3xl">
+              {site.name}
+            </span>
+            <span className="hidden text-xs text-muted sm:inline">
+              단체복 제작
+            </span>
+          </Link>
+          <div className="hidden items-center gap-1.5 border-l border-line pl-3 sm:flex">
+            {certBadges.map((badge) => (
+              <div
+                key={badge.label}
+                title={badge.label}
+                className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-line bg-white lg:h-9 lg:w-9"
+              >
+                <Img
+                  src={badge.image}
+                  alt={badge.label}
+                  className="h-full w-full object-contain p-0.5"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* 데스크탑 메뉴 */}
         <nav className="ml-auto hidden items-center gap-7 lg:flex">
