@@ -31,7 +31,7 @@ export const categoryDefs: CategoryDef[] = [
       },
       {
         label: "겨울",
-        subCategories: ["작업복", "근무복", "제전복", "상하세트", "패딩"],
+        subCategories: ["작업복", "근무복", "상하세트", "패딩"],
       },
     ],
   },
