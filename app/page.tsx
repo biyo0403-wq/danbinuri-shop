@@ -4,6 +4,7 @@ import Strengths from "@/components/home/Strengths";
 import Categories from "@/components/home/Categories";
 import Brands from "@/components/home/Brands";
 import Process from "@/components/home/Process";
+import Certifications from "@/components/home/Certifications";
 import InquiryCTA from "@/components/home/InquiryCTA";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <Categories />
       <Brands />
       <Process />
+      <Certifications />
       <InquiryCTA />
     </>
   );
