@@ -17,13 +17,12 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-shell items-center gap-4 px-4 lg:h-24 lg:px-5">
         {/* 로고 + 인증마크 */}
         <div className="flex shrink-0 items-center gap-3">
-          <Link href="/" className="flex items-baseline gap-2">
-            <span className="text-2xl font-extrabold tracking-tight text-brand lg:text-3xl">
-              {site.name}
-            </span>
-            <span className="hidden text-xs text-muted sm:inline">
-              단체복 제작
-            </span>
+          <Link href="/" className="flex items-center" aria-label={site.name}>
+            <Img
+              src="/images/logo.jpg"
+              alt={site.name}
+              className="h-12 w-auto object-contain lg:h-14"
+            />
           </Link>
           <div className="hidden items-center gap-1.5 border-l border-line pl-3 sm:flex">
             {certBadges.map((badge) => (
