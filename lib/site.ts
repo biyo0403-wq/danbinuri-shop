@@ -12,7 +12,7 @@ export const site = {
     "작업복·단체복·조끼·티셔츠를 한 벌부터 대량까지 맞춤 제작하고, 스포츠·아웃도어 브랜드 정품 구매대행을 함께 제공합니다.",
 
   // 문의 채널 — 견적 신청은 자체 폼(/inquiry)으로 받는다
-  kakaoUrl: "http://pf.kakao.com/_VXXxfX", // 카카오톡 채널
+  kakaoUrl: "http://pf.kakao.com/_XVYfX", // 카카오톡 채널
   email: "danbinuri25@danbinuri.kr", // 회사 대표 메일
   phone: "02-6448-7221", // 대표 전화
   mobile: "010-5267-7208", // 휴대폰

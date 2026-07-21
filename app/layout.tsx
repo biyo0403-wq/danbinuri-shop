@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileCTABar from "@/components/layout/MobileCTABar";
+import FloatingButtons from "@/components/layout/FloatingButtons";
 
 import { site } from "@/lib/site";
 
@@ -48,6 +49,7 @@ export default function RootLayout({
         <main className="min-h-[60vh]">{children}</main>
         <Footer />
         <MobileCTABar />
+        <FloatingButtons />
       </body>
     </html>
   );
