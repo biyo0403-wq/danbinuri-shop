@@ -21,7 +21,7 @@ export const site = {
 
   company: {
     bizName: "(주)단비누리",
-    ceo: "이영기",
+    ceo: "이영기 / 이지연",
     bizNo: "490-81-03515",
     address: "서울특별시 서초구 논현로11길 49 2층(양재동)",
     fax: "02-579-4333",
