@@ -14,28 +14,33 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">
-      <div className="mx-auto flex h-20 max-w-shell items-center gap-4 px-4 lg:h-24 lg:px-5">
+      <div className="mx-auto flex h-24 max-w-shell items-center gap-4 px-4 lg:h-28 lg:px-5">
         {/* 로고 + 인증마크 */}
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-4">
           <Link href="/" className="flex items-center" aria-label={site.name}>
             <Img
               src="/images/logo.jpg"
               alt={site.name}
-              className="h-12 w-auto object-contain lg:h-14"
+              className="h-16 w-auto object-contain lg:h-20"
             />
           </Link>
-          <div className="hidden items-center gap-1.5 border-l border-line pl-3 sm:flex">
+          <div className="hidden items-start gap-3 border-l border-line pl-4 sm:flex">
             {certBadges.map((badge) => (
               <div
                 key={badge.label}
                 title={badge.label}
-                className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-line bg-white lg:h-9 lg:w-9"
+                className="flex flex-col items-center gap-1"
               >
-                <Img
-                  src={badge.image}
-                  alt={badge.label}
-                  className="h-full w-full object-contain p-0.5"
-                />
+                <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-line bg-white lg:h-12 lg:w-12">
+                  <Img
+                    src={badge.image}
+                    alt={badge.label}
+                    className="h-full w-full object-contain p-0.5"
+                  />
+                </div>
+                <span className="text-[10px] font-semibold leading-none text-muted lg:text-[11px]">
+                  {badge.short}
+                </span>
               </div>
             ))}
           </div>
